@@ -13,9 +13,9 @@ jobs:
     steps:
     - name: Set ENV VARS
       run: |
-        if "$GITHUB_REF" == "refs/heads/pubsdproduction"; then
+        if [ "$GITHUB_REF" == "refs/heads/pubsdproduction" ]; then
             echo "::set-env name=DEPLOY_TO::production"
-          elif "$GITHUB_REF" == "refs/heads/master"; then
+          elif [ "$GITHUB_REF" == "refs/heads/master" ]; then
             echo "::set-env name=DEPLOY_TO::staging"
         fi;
 
