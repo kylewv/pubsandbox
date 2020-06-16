@@ -41,15 +41,15 @@ jobs:
       run: |
         composer install --no-dev --no-progress --no-suggest
     - name: build docker images
-      if: success() && -z $DEPLOY_TO
+      if: success() && -z env.DEPLOY_TO
       run: |
         echo "depoy to detected. running build images..."
     - name: deploy to staging
-      if: success() && $DEPLOY_TO == 'staging'
+      if: success() && env.DEPLOY_TO == 'staging'
       run: |
        echo "publishing to staging"
     - name: deploy to production
-      if: success() && $DEPLOY_TO == 'production'
+      if: success() && env.DEPLOY_TO == 'production'
       run: |
         echo "publishing to production"
 
