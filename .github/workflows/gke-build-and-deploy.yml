@@ -4,7 +4,7 @@ on:
   push:
     branches: [ feature/github-actions-setup ]
   pull_request:
-    branches: [ master, production ]
+    branches: [ master, pubsdproduction ]
 
 jobs:
   build:
