@@ -41,7 +41,7 @@ jobs:
       run: |
         composer install --no-dev --no-progress --no-suggest
     - name: build docker images
-      if: success() && $DEPLOY_TO
+      if: success() && -z $DEPLOY_TO
       run: |
         echo "depoy to detected. running build images..."
     - name: deploy to staging
