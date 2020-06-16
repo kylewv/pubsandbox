@@ -2,8 +2,6 @@ name: testing workflow
 
 on:
   push:
-    branches: [ feature/github-actions-setup ]
-  pull_request:
     branches: [ master, pubsdproduction ]
 
 jobs:
