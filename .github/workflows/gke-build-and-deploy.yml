@@ -2,7 +2,7 @@ name: testing workflow
 
 on:
   push:
-    branches: [ master, pubsdproduction ]
+    branches: [ master, pubsdproduction, test-branch ]
 
 jobs:
   build:
