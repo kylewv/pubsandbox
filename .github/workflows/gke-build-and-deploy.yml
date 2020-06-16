@@ -1,114 +1,58 @@
-#name: testing workflow
-#
-#jobs:
-#  build:
-#    name: build and conditionally deploy
-#    runs-on: ubuntu-latest
-#    env:
-#      NVM_VERSION: v0.34.0
-#      GCP_PROJECT: 'wsg-flagship-www'
-#      GCP_CLUSTER_NAME: 'wsg'
-#      GCP_CLUSTER_ZONE: 'us-central1-a'
-#      # The container names
-#      WP_WEB_NAME: 'wordpress-webserver'
-#      WP_PHP_NAME: 'wordpress-php'
-#      # Prod Kubernetes Deployment name
-#      PROD_PHP_NAME: 'prod-wordpress-php'
-#      # Staging Kubernetes Deployment name
-#      STAGING_PHP_NAME: 'staging-wordpress-php'
-#      WSG_GCP_KEY: ${{ secrets.WSG_GCP_KEY }}
-#    steps:
-#    - name: Set ENV VARS
-#      run: |
-#        if "$GITHUB_REF" == refs/heads/production; then
-#            echo ::set-env name=DEPLOY_TO::"production"
-#          elif "$GITHUB_REF" == refs/heads/master; then
-#            echo ::set-env name=DEPLOY_TO::"staging"
-#        fi;
-#
-#        echo ::set-env name=NVM_DIR::$GITHUB_WORKSPACE/nvm/$NVM_VERSION
-#        echo ::set-env name=workspace::$GITHUB_WORKSPACE
-#
-#        SAFE_BRANCH_NAME=$(echo $GITHUB_EVENT_NAME | sed 's/\//-/g')
-#        echo ::set-env name=SAFE_BRANCH_NAME::$SAFE_BRANCH_NAME
-#        echo ::set-env name=WEB_IMAGE_NAME::gcr.io/$GCP_PROJECT/$WP_WEB_NAME:$SAFE_BRANCH_NAME-$(date +%Y.%m.%d-%H.%M.%S)
-#        echo ::set-env name=PHP_IMAGE_NAME::gcr.io/$GCP_PROJECT/$WP_PHP_NAME:$SAFE_BRANCH_NAME-$GITHUB_ACTION
-#
-#    - name: Checkout Repo
-#      uses: actions/checkout@v2
-#    - name: Get Composer Cache Directory
-#      id: composer-cache
-#      run: |
-#        echo "::set-output name=dir::$(composer config cache-files-dir)"
-#    - name: Get Composer Cache
-#      uses: actions/cache@v2
-#      with:
-#        path: ${{ steps.composer-cache.outputs.dir }}
-#        key: ${{ runner.os }}-composer-cache-${{ hashFiles('**/composer.lock') }}
-#        restore-keys: |
-#          ${{ runner.os }}-composer-
-#    - name: Get Composer Vendor Cache
-#      uses: actions/cache@v2
-#      with:
-#        path: vendor
-#        key: ${{ runner.OS }}-composer-vendor-${{ hashFiles('**/composer.lock') }}
-#    - name: Get NVM Cache
-#      uses: actions/cache@v2
-#      with:
-#        path: ${{ env.workspace }}/nvm
-#        key: ${{ runner.OS }}-nvm-version-${{ env.NVM_VERSION }}
-#    - name: Get Node Modules Cache
-#      uses: actions/cache@v2
-#      with:
-#        path: ${{ env.workspace }}/node_modules
-#        key: ${{ runner.OS }}-node-modules-${{ hashFiles('**/package.json') }}
-#    - name: Composer install
-#      run: |
-#        composer config -g github-oauth.github.com ${{ secrets.WSG_GITHUB_KEY }}
-#        composer install --no-dev --no-progress --no-suggest
-#    - name: Setup Node
-#      run: |
-#        . $GITHUB_WORKSPACE/ci/setup-nvm-node.sh
-#    - name: Yarn Install and Grunt Build Tasks
-#      run: |
-#        source $NVM_DIR/nvm.sh >/dev/null 2>&1
-#        echo node version $(node -v)
-#        yarn install --frozen-lockfile
-#        grunt --debug
-#    - name: build docker images
-#      if: success() && $DEPLOY_TO
-#      run: |
-#        ## move temp stuff outside of build dirctory
-#        ## so it dosen't get included in image build
-#        mv .git ..
-#        mv node_modules ..
-#        mv nvm ..
-#
-#        # Configure docker authorization for gcr.io image pulls
-#        echo "$WSG_GCP_KEY" > $HOME/gcloud-service-key.json
-#        gcloud auth activate-service-account --key-file=$HOME/gcloud-service-key.json
-#        gcloud auth configure-docker
-#
-#        docker build --pull -t $WEB_IMAGE_NAME -f gke_resources/$WP_WEB_NAME/Dockerfile .
-#        docker build --pull -t $PHP_IMAGE_NAME -f gke_resources/$WP_PHP_NAME/Dockerfile .
-#
-#        gcloud config set project $GCP_PROJECT
-#        docker push $WEB_IMAGE_NAME
-#        docker push $PHP_IMAGE_NAME
-#
-#        # move temp stuff back so it can be cached
-#        mv ../node_modules node_modules
-#        mv ../nvm nvm
-#    - name: deploy to staging
-#      if: success() && $DEPLOY_TO == 'staging'
-#      run: |
-#        gcloud container clusters get-credentials $GCP_CLUSTER_NAME --zone $GCP_CLUSTER_ZONE --project $GCP_PROJECT
-#        kubectl set image deployment/$STAGING_PHP_NAME $WP_WEB_NAME=$WEB_IMAGE_NAME
-#        kubectl set image deployment/$STAGING_PHP_NAME $WP_PHP_NAME=$PHP_IMAGE_NAME
-#    - name: deploy to production
-#      if: success() && $DEPLOY_TO == 'production'
-#      run: |
-#        gcloud container clusters get-credentials $GCP_CLUSTER_NAME --zone $GCP_CLUSTER_ZONE --project $GCP_PROJECT
-#        kubectl set image deployment/$PROD_PHP_NAME $WP_WEB_NAME=$WEB_IMAGE_NAME
-#        kubectl set image deployment/$PROD_PHP_NAME $WP_PHP_NAME=$PHP_IMAGE_NAME
-#
+name: testing workflow
+
+on:
+  push:
+    branches: [ feature/github-actions-setup ]
+  pull_request:
+    branches: [ master, production ]
+
+jobs:
+  build:
+    name: build and conditionally deploy
+    runs-on: ubuntu-latest
+    env:
+      MY_ENV_VAR: "hello"
+    steps:
+    - name: Set ENV VARS
+      run: |
+        if "$GITHUB_REF" == refs/heads/pubsdproduction; then
+            echo ::set-env name=DEPLOY_TO::"production"
+          elif "$GITHUB_REF" == refs/heads/master; then
+            echo ::set-env name=DEPLOY_TO::"staging"
+        fi;
+
+    - name: Checkout Repo
+      uses: actions/checkout@v2
+    - name: Get Composer Cache Directory
+      id: composer-cache
+      run: |
+        echo "::set-output name=dir::$(composer config cache-files-dir)"
+    - name: Get Composer Cache
+      uses: actions/cache@v2
+      with:
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-composer-cache-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-composer-
+    - name: Get Composer Vendor Cache
+      uses: actions/cache@v2
+      with:
+        path: vendor
+        key: ${{ runner.OS }}-composer-vendor-${{ hashFiles('**/composer.lock') }}
+    - name: Composer install
+      run: |
+        composer install --no-dev --no-progress --no-suggest
+    - name: build docker images
+      if: success() && $DEPLOY_TO
+      run: |
+        echo "depoy to detected. running build images..."
+    - name: deploy to staging
+      if: success() && $DEPLOY_TO == 'staging'
+      run: |
+       echo "publishing to staging"
+    - name: deploy to production
+      if: success() && $DEPLOY_TO == 'production'
+      run: |
+        echo "publishing to production"
+
+
