@@ -10,5 +10,6 @@ class MyClass{
     {
 
         echo $this->myprop;
+        // do more code
     }
 };
