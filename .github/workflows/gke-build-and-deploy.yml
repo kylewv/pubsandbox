@@ -23,7 +23,7 @@ jobs:
 
         export
 
-        ls -al $HOME
+        ls -al $HOME/.nvm
 
     - name: Checkout Repo
       uses: actions/checkout@v2
