@@ -4,8 +4,7 @@ on:
   push:
     branches: [ master, pubsdproduction ]
   pull_request:
-    branches: [ master, pubsdproduction ]
-    type: [ opened, synchronize ]
+    branches: [ master ]
 
 jobs:
   build:
