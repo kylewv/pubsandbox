@@ -3,6 +3,7 @@ name: testing workflow
 on:
   push:
     branches: [ master, pubsdproduction ]
+    tags:
   pull_request:
     branches: [ master, pubsdproduction ]
 
@@ -23,7 +24,7 @@ jobs:
 
         export
 
-        ls -al $HOME/.nvm
+        ls -al $HOME/.nvm/nvm.sh
 
     - name: Checkout Repo
       uses: actions/checkout@v2
