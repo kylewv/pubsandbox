@@ -21,7 +21,6 @@ jobs:
             echo "::set-env name=DEPLOY_TO::staging"
         fi;
 
-
         export
 
         ls -al $HOME/.nvm/nvm.sh
