@@ -21,6 +21,7 @@ jobs:
           elif [ "$GITHUB_REF" == "refs/heads/master" ]; then
             echo "::set-env name=DEPLOY_TO::staging"
         fi;
+
         export
 
         ls -al $HOME/.nvm/nvm.sh
