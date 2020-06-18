@@ -3,9 +3,9 @@ name: testing workflow
 on:
   push:
     branches: [ master, pubsdproduction ]
-    tags:
   pull_request:
     branches: [ master, pubsdproduction ]
+    type: [ opened, synchronize ]
 
 jobs:
   build:
