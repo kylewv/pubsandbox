@@ -15,7 +15,7 @@ jobs:
     steps:
     - name: try nvm
       shell: bash -l -eo pipefail {0}
-      run: nvm ls
+      run: nvm current
     - name: Set ENV VARS
       run: |
         if [ "$GITHUB_REF" == "refs/heads/pubsdproduction" ]; then
