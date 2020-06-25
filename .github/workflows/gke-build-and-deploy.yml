@@ -13,59 +13,62 @@ jobs:
     env:
       MY_ENV_VAR: "hello"
     steps:
+#      - name: Checkout Repo
+#        uses: actions/checkout@v2
+#      - name: try grep
+#        run: |
+#          composer install --no-dev --no-progress --no-suggest
+#          composer show -P | grep wpackagist | sed 's/.* //g'
+#      - name: try nvm
+#        shell: bash -l -eo pipefail {0}
+#        run: nvm current
+      - name: Set ENV VARS
+        run: |
+          if [ "$GITHUB_REF" == "refs/heads/pubsdproduction" ]; then
+              echo "::set-env name=DEPLOY_TO::production"
+            elif [ "$GITHUB_REF" == "refs/heads/master" ]; then
+              echo "::set-env name=DEPLOY_TO::staging"
+          fi;
+
+          export
+
       - name: Checkout Repo
         uses: actions/checkout@v2
-      - name: try grep
+
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - name: Get Composer Cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-cache-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+      - name: Get Composer Vendor Cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            composer show -P | grep wpackagist | sed 's/.* //g'
+            vendor
+          key: ${{ runner.OS }}-composer-vendor-${{ hashFiles('**/composer.lock') }}
+
+      - name: Composer install
         run: |
           composer install --no-dev --no-progress --no-suggest
-          composer show -P | grep wpackagist | sed 's/.* //g'
-#    - name: try nvm
-#      shell: bash -l -eo pipefail {0}
-#      run: nvm current
-#    - name: Set ENV VARS
-#      run: |
-#        if [ "$GITHUB_REF" == "refs/heads/pubsdproduction" ]; then
-#            echo "::set-env name=DEPLOY_TO::production"
-#          elif [ "$GITHUB_REF" == "refs/heads/master" ]; then
-#            echo "::set-env name=DEPLOY_TO::staging"
-#        fi;
-#
-#        export
-#
-#        ls -al $HOME/.nvm/nvm.sh
-#
-#    - name: Checkout Repo
-#      uses: actions/checkout@v2
-#    - name: Get Composer Cache Directory
-#      id: composer-cache
-#      run: |
-#        echo "::set-output name=dir::$(composer config cache-files-dir)"
-#    - name: Get Composer Cache
-#      uses: actions/cache@v2
-#      with:
-#        path: ${{ steps.composer-cache.outputs.dir }}
-#        key: ${{ runner.os }}-composer-cache-${{ hashFiles('**/composer.lock') }}
-#        restore-keys: |
-#          ${{ runner.os }}-composer-
-#    - name: Get Composer Vendor Cache
-#      uses: actions/cache@v2
-#      with:
-#        path: vendor
-#        key: ${{ runner.OS }}-composer-vendor-${{ hashFiles('**/composer.lock') }}
-#    - name: Composer install
-#      run: |
-#        composer install --no-dev --no-progress --no-suggest
-#    - name: build docker images
-#      if: success() && env.DEPLOY_TO
-#      run: |
-#        echo "depoy to detected. running build images..."
-#    - name: deploy to staging
-#      if: success() && env.DEPLOY_TO == 'staging'
-#      run: |
-#       echo "publishing to staging"
-#    - name: deploy to production
-#      if: success() && env.DEPLOY_TO == 'production'
-#      run: |
-#        echo "publishing to production"
+
+      - name: build docker images
+        if: success() && env.DEPLOY_TO
+        run: |
+          echo "depoy to detected. running build images..."
+      - name: deploy to staging
+        if: success() && env.DEPLOY_TO == 'staging'
+        run: |
+         echo "publishing to staging"
+      - name: deploy to production
+        if: success() && env.DEPLOY_TO == 'production'
+        run: |
+          echo "publishing to production"
 
 
