@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v2
       - name: try grep
         run: |
-          composer install
+          composer install --no-dev --no-progress --no-suggest
           composer show -P | grep wpackagist | sed 's/.* //g'
 #    - name: try nvm
 #      shell: bash -l -eo pipefail {0}
