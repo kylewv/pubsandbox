@@ -1,5 +1,11 @@
 {
     "require": {
-        "aws/aws-sdk-php": "^3.142"
+        "aws/aws-sdk-php": "^3.142",
+        "simplesamlphp/saml2": "~3.2.2",
+        "robrichards/xmlseclibs": "^3.0",
+        "whitehat101/apr1-md5": "~1.0",
+        "twig/twig": "~1.0",
+        "gettext/gettext": "^3.5",
+        "jaimeperez/twig-configurable-i18n": "^1.2"
     }
 }
