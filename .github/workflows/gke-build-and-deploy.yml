@@ -50,7 +50,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            composer show -P | grep wpackagist | sed 's/.* //g'
+            ${ composer show -P | grep wpackagist | sed 's/.* //g' }
             vendor
           key: ${{ runner.OS }}-composer-vendor-${{ hashFiles('**/composer.lock') }}
 
