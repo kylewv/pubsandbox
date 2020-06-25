@@ -16,7 +16,9 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v2
       - name: try grep
-        run: composer show -P | grep wpackagist | sed 's/.* //g'
+        run: |
+          composer install
+          composer show -P | grep wpackagist | sed 's/.* //g'
 #    - name: try nvm
 #      shell: bash -l -eo pipefail {0}
 #      run: nvm current
