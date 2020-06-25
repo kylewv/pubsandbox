@@ -1,5 +1,19 @@
 {
+    "repositories": [
+    {
+        "type": "composer",
+        "url": "https://wpackagist.org"
+    }
+    ],
     "require": {
+        "johnpbloch/wordpress-core-installer": "^2.0.0",
+        "johnpbloch/wordpress-core": "5.3.3",
+        "wpackagist-plugin/akismet": "^4.1.3",
+        "wpackagist-plugin/all-mime-type-options": "^1.2.2",
+        "wpackagist-plugin/bulk-remove-posts-from-category": "^3.0",
+        "wpackagist-plugin/classic-editor": "^1.4",
+        "wpackagist-plugin/limit-login-attempts-reloaded": "^2.7.1",
+        "wpackagist-plugin/more-privacy-options": "^4.6",
         "aws/aws-sdk-php": "^3.142",
         "simplesamlphp/saml2": "~3.2.2",
         "robrichards/xmlseclibs": "^3.0",
@@ -7,5 +21,20 @@
         "twig/twig": "~1.0",
         "gettext/gettext": "^3.5",
         "jaimeperez/twig-configurable-i18n": "^1.2"
+    },
+    "extra": {
+        "wordpress-install-dir": "wp",
+        "installer-paths": {
+            "wp-content/mu-plugins/{$name}": [
+                "type:wordpress-muplugin"
+            ],
+            "wp-content/plugins/{$name}": [
+                "type:wordpress-plugin",
+                "moderntribe/panel-builder"
+            ],
+            "wp-content/plugins/s3-uploads": [
+                "humanmade/S3-Uploads"
+            ]
+        }
     }
 }
