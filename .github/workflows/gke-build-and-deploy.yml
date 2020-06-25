@@ -18,7 +18,7 @@ jobs:
       - name: try grep
         run: |
           composer install --no-dev --no-progress --no-suggest
-          echo composer show -P | grep wpackagist | sed 's/.* //g'
+          composer show -P | grep wpackagist | sed 's/.* //g'
 #    - name: try nvm
 #      shell: bash -l -eo pipefail {0}
 #      run: nvm current
