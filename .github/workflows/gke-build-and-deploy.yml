@@ -31,6 +31,8 @@ jobs:
           fi;
           docker pull postgres
           docker info
+          kubectl config use-context kubernetes
+          ifconfig
 
           export
 
