@@ -29,8 +29,8 @@ jobs:
             elif [ "$GITHUB_REF" == "refs/heads/master" ]; then
               echo "::set-env name=DEPLOY_TO::staging"
           fi;
-#          docker pull postgres
-#          docker info
+          docker pull postgres
+          docker info
 #          kubectl config get-contexts
 #          ifconfig
 
