@@ -30,6 +30,8 @@ jobs:
               echo "::set-env name=DEPLOY_TO::staging"
           fi;
 
+          docker info
+
           export
 
       - name: Checkout Repo
@@ -39,6 +41,9 @@ jobs:
         id: composer-cache
         run: |
           echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - name: Get Yarn Cache Directory
+        id: yarn-cache
+        run: echo "::set-output name=dir::$(yarn cache dir)"
       - name: Get Composer Cache
         uses: actions/cache@v2
         with:
@@ -53,10 +58,30 @@ jobs:
             ${ composer show -P | grep wpackagist | sed 's/.* //g' }
             vendor
           key: ${{ runner.OS }}-composer-vendor-${{ hashFiles('**/composer.lock') }}
+      - name: Get Yarn Node Modules Cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.OS }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
+      - name: Get Node Modules Cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.workspace }}/node_modules
+          key: ${{ runner.OS }}-node-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Composer install
         run: |
           composer install --no-dev --no-progress --no-suggest
+      - name: Setup Node Version
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Yarn Install and Grunt Build Tasks
+        shell: bash
+        run: |
+          echo node version $(node -v)
+          yarn install --frozen-lockfile
+#          grunt --debug
 
       - name: build docker images
         if: success() && env.DEPLOY_TO
