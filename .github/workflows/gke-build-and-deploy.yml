@@ -29,9 +29,10 @@ jobs:
             elif [ "$GITHUB_REF" == "refs/heads/master" ]; then
               echo "::set-env name=DEPLOY_TO::staging"
           fi;
+          ifconfig vboxnet0 up
           docker pull postgres
           docker info
-          ls -al /var/lib/docker/
+
           export
       - name: Checkout Repo
         uses: actions/checkout@v2
