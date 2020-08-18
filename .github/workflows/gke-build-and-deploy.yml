@@ -31,12 +31,8 @@ jobs:
           fi;
           docker pull postgres
           docker info
-#          kubectl config get-contexts
-#          ifconfig
-
           ls -al /var/lib/docker/
           export
-
       - name: Checkout Repo
         uses: actions/checkout@v2
 
