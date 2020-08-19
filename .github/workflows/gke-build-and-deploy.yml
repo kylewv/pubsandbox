@@ -22,6 +22,9 @@ jobs:
 #      - name: try nvm
 #        shell: bash -l -eo pipefail {0}
 #        run: nvm current
+      - name: Public IP
+        id: ip
+        uses: haythem/public-ip@v1
       - name: Set ENV VARS
         run: |
           if [ "$GITHUB_REF" == "refs/heads/pubsdproduction" ]; then
@@ -29,6 +32,7 @@ jobs:
             elif [ "$GITHUB_REF" == "refs/heads/master" ]; then
               echo "::set-env name=DEPLOY_TO::staging"
           fi;
+          echo ${{ steps.ip.outputs.ipv4 }}
           docker pull postgres
           docker info
           echo "ls -al /var/lib/docker"
