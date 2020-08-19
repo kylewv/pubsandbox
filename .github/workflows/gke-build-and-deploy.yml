@@ -29,11 +29,11 @@ jobs:
             elif [ "$GITHUB_REF" == "refs/heads/master" ]; then
               echo "::set-env name=DEPLOY_TO::staging"
           fi;
-          ifconfig
-          sudo ifconfig docker0 up
+#          ifconfig
+#          sudo ifconfig docker0 up
           docker pull postgres
           docker info
-
+          echo "ls -al /var/lib/docker
           export
       - name: Checkout Repo
         uses: actions/checkout@v2
