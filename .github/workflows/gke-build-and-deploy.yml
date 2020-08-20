@@ -22,6 +22,10 @@ jobs:
 #      - name: try nvm
 #        shell: bash -l -eo pipefail {0}
 #        run: nvm current
+      - name: test negative
+        if: success() && !env.ABADENVVARHERE
+        run: |
+          echo "succefully negated env var
       - name: Public IP
         id: ip
         uses: haythem/public-ip@v1
