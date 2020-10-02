@@ -25,7 +25,7 @@ jobs:
       - name: test negative
         if: success() && !env.ABADENVVARHERE
         run: |
-          echo "succefully negated env var"
+          echo "succefully negated env var "
       - name: Public IP
         id: ip
         uses: haythem/public-ip@v1
