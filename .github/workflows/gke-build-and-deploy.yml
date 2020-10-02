@@ -26,6 +26,7 @@ jobs:
         if: success() && !env.ABADENVVARHERE
         run: |
           echo "succefully negated env var "
+          ping google.com -c 3
       - name: Public IP
         id: ip
         uses: haythem/public-ip@v1
