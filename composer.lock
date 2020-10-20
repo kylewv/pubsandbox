@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dd16fa6142d6ea47fa529cd700f52765",
+    "content-hash": "b85ff95f17b44f1aeaefea275037cab5",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -537,6 +537,42 @@
                 "url"
             ],
             "time": "2019-07-01T23:21:34+00:00"
+        },
+        {
+            "name": "humanmade/mercator",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/humanmade/Mercator.git",
+                "reference": "21b0e838ff23d24bf023a74d1da42e063553d934"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/humanmade/Mercator/zipball/21b0e838ff23d24bf023a74d1da42e063553d934",
+                "reference": "21b0e838ff23d24bf023a74d1da42e063553d934",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "type": "wordpress-muplugin",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Human Made Limited",
+                    "email": "support@humanmade.co.uk",
+                    "homepage": "http://hmn.md/"
+                }
+            ],
+            "description": "WordPress multisite domain mapping for the modern era.",
+            "homepage": "https://github.com/humanmade/Mercator",
+            "keywords": [
+                "wordpress"
+            ],
+            "time": "2018-10-30T18:53:20+00:00"
         },
         {
             "name": "jaimeperez/twig-configurable-i18n",
