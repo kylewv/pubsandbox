@@ -5,3 +5,4 @@ wp-content
 *.terraform
 node_modules
 terraform.*
+#a new line in master
