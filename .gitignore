@@ -2,3 +2,6 @@
 vendor
 wp
 wp-content
+*.terraform
+node_modules
+terraform.*
