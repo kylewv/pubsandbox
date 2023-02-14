@@ -1,0 +1,6 @@
+[percy] Downloading Chromium 885264...
+[percy] Successfully downloaded Chromium 885264
+[percy] Percy has started!
+[percy] Processing 1 snapshot...
+[percy] Snapshot taken: facstaff
+[percy] Finalized build #37: https://percy.io/bbceee8f/Carleton-Website/builds/16573775

@@ -1,0 +1,9 @@
+name: pubsandbox
+
+services:
+  myservice:
+    type: apache
+
+proxy:
+  myservice:
+    - web.lndo.site
