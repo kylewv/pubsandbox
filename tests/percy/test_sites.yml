@@ -1,0 +1,5 @@
+- name: facstaff
+  prodPath: facstaff
+  prodWaitFor: .pageContent
+  stagingPath: facstaff
+  stagingWaitFor: .pageContent
