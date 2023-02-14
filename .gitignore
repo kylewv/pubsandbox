@@ -6,3 +6,6 @@ wp-content
 node_modules
 terraform.*
 #a new line in master
+
+
+# commit only for test
