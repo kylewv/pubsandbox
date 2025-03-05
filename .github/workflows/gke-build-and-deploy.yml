@@ -1,8 +1,8 @@
 name: testing workflow
 
 on:
-  push:
-    branches: [ master, pubsdproduction ]
+#  push:
+#    branches: [ master, pubsdproduction ]
   pull_request:
     branches: [ master ]
 

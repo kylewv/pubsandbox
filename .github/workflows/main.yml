@@ -1,4 +1,4 @@
-name: Project Specific Workflow
+name: main
 on:
   workflow_dispatch:
 
