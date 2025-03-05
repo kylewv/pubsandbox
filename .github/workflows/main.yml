@@ -4,6 +4,7 @@ on:
 #    branches: [<which branches to run on>]
 #  pull_request:
 #    branches: [<which branches to run on>]
+  workflow_call:
   workflow_dispatch:
     # Defaults here are for worflow_dispatch only, all other events are set in EnvSetup.setup-output-defaults:
     inputs:
