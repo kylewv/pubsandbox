@@ -14,9 +14,9 @@ on:
 jobs:
   EnvSetup:
     name: Setup Dynamic Environment Variables
-    runs-on: <your-awesome-runner>
+    runs-on: ubuntu-latest
     outputs:
-      build-and-verify: ${{ steps.set-output-defaults.outputs.url }}
+      url: ${{ steps.set-output-defaults.outputs.url }}
     steps:
       - name: set outputs with default values
         id: set-output-defaults
@@ -26,4 +26,4 @@ jobs:
     needs: [EnvSetup]
     uses: ./.github/workflows/sub.yml
     with:
-      build-and-verify: ${{needs.EnvSetup.outputs.build-and-verify}}
+      url: ${{needs.EnvSetup.outputs.url}}
