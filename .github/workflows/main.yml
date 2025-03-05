@@ -12,9 +12,9 @@ jobs:
       - name: set outputs with default values
         id: set-output-defaults
         run: |
-          echo "url=$URL" >> $GITHUB_OUTPUT
+          echo "url=https://myuerlher.com" >> $GITHUB_OUTPUT
   invoke-workflow:
-    needs: [EnvSetup]
+    needs: EnvSetup
     uses: ./.github/workflows/sub.yml
     with:
       url: ${{needs.EnvSetup.outputs.url}}
