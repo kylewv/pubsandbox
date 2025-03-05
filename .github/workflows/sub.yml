@@ -1,0 +1,29 @@
+name: Wordpress SQ1 functional testing
+
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        required: true
+        description: "The base environment url to use."
+        type: choice
+        options:
+          - 'https://wptest.wsg-gke.carleton.edu/'
+          - 'https://staging.wsg-gke.carleton.edu/'
+          - 'https://carleton.edu/'
+  workflow_call:
+    inputs:
+      url:
+        type: string
+        required: true
+
+jobs:
+  test:
+    name: Wordpress SQ1 functional testing
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Get test URLs
+        env:
+          URL: ${{ inputs.url }}
+        run: |

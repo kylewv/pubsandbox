@@ -1,0 +1,29 @@
+name: Project Specific Workflow
+on:
+#  push:
+#    branches: [<which branches to run on>]
+#  pull_request:
+#    branches: [<which branches to run on>]
+  workflow_dispatch:
+    # Defaults here are for worflow_dispatch only, all other events are set in EnvSetup.setup-output-defaults:
+    inputs:
+      build-and-verify:
+        description: 'Do a build and verify'
+        required: true
+        default: 'true'
+jobs:
+  EnvSetup:
+    name: Setup Dynamic Environment Variables
+    runs-on: <your-awesome-runner>
+    outputs:
+      build-and-verify: ${{ steps.set-output-defaults.outputs.url }}
+    steps:
+      - name: set outputs with default values
+        id: set-output-defaults
+        run: |
+          echo "url=$URL" >> $GITHUB_OUTPUT
+  invoke-workflow:
+    needs: [EnvSetup]
+    uses: ./.github/workflows/sub.yml
+    with:
+      build-and-verify: ${{needs.EnvSetup.outputs.build-and-verify}}
