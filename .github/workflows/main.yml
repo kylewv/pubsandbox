@@ -1,6 +1,6 @@
 name: Project Specific Workflow
 on:
-  workflow_call:
+  workflow_dispatch:
 
 jobs:
   EnvSetup:
