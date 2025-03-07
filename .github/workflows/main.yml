@@ -4,6 +4,7 @@ on:
 
 jobs:
   EnvSetup:
+    environment: development
     name: Setup Dynamic Environment Variables
     runs-on: ubuntu-latest
     outputs:
@@ -13,6 +14,14 @@ jobs:
         id: set-output-defaults
         run: |
           echo "url=https://myuerlher.com" >> $GITHUB_OUTPUT
+      - name: wait a bunch
+        id: set-output-defaults
+        run: |
+          sleep 20
+      - name: set outputs with default values
+        id: set-output-defaults
+        run: |
+          sleep 20
   invoke-workflow:
     needs: EnvSetup
     uses: ./.github/workflows/sub.yml
