@@ -5,7 +5,7 @@ on:
 jobs:
   EnvSetup:
     environment:
-      name: Progress
+      name: ${{ github.ref_name }}
     name: Setup Dynamic Environment Variables
     runs-on: ubuntu-latest
     outputs:
