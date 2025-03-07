@@ -4,7 +4,8 @@ on:
 
 jobs:
   EnvSetup:
-    environment: development
+    environment:
+      name: ${{ needs.set-output-defaults.outputs.enviro }}
     name: Setup Dynamic Environment Variables
     runs-on: ubuntu-latest
     outputs:
@@ -14,6 +15,7 @@ jobs:
         id: set-output-defaults
         run: |
           echo "url=https://myuerlher.com" >> $GITHUB_OUTPUT
+          echo "enviro=abranchnamehere" >> $GITHUB_OUTPUT
       - name: wait a bunch
         run: |
           sleep 20
