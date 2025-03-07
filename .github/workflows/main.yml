@@ -5,7 +5,7 @@ on:
 jobs:
   EnvSetup:
     environment:
-      name: ${{ needs.set-output-defaults.outputs.enviro }}
+      name: Progress
     name: Setup Dynamic Environment Variables
     runs-on: ubuntu-latest
     outputs:
